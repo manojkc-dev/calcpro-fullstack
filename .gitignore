@@ -1,0 +1,15 @@
+# Python / Django
+cenv/
+__pycache__/
+*.py[cod]
+*$py.class
+db.sqlite3
+.env
+
+# React / Vite
+node_modules/
+dist/
+dist-ssr/
+.vite/
+.env.local
+.DS_Store
