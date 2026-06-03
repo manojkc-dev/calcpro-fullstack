@@ -130,7 +130,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #communication between frontend and backend
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", # Default port for Vite + React
-    "http://localhost:3000", # Default port for Create-React-App
-]
+CORS_ALLOWED_ORIGINS = True

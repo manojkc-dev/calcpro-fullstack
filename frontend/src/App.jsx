@@ -29,7 +29,11 @@ function App() {
       setDisplay(finalResult);
 
       // 3. Send the equation and result to the Django database
-      fetch("http://127.0.0.1:8000/api/calculations/", {
+      // 3. Send the equation and result to the Django database
+      const API_BASE_URL =
+        import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
+      fetch(`${API_BASE_URL}/api/calculations/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
