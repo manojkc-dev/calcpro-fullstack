@@ -24,12 +24,14 @@ CalcPro is a feature-rich, multi-mode calculator application engineered to handl
 ## 🛠️ Tech Stack
 
 ### Backend Architecture
+
 - **Framework:** Django 5.2 & Django REST Framework (DRF)
 - **Production Web Server:** Gunicorn
 - **Static Asset Management:** WhiteNoise
 - **Database:** SQLite (Development) / Easily portable to PostgreSQL via database engine abstraction
 
 ### Frontend Architecture
+
 - **Framework & Tooling:** React 18+ powered by Vite (for near-instant UI bundling)
 - **Styling UI:** Responsive CSS & Lucide Icons
 - **Mathematical Evaluation:** Safe mathematical expressions handling using `mathjs`
@@ -51,3 +53,4 @@ calculator/
     ├── src/                 # Source Application Layer (Components, Assets, App.jsx)
     ├── package.json         # JavaScript Node Dependencies
     └── vite.config.js       # Vite Compilation Engine Settings
+```
