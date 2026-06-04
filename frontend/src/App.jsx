@@ -1,8 +1,7 @@
+import { useState } from "react"; // Fixed Line 1 warning
 import ProgrammerCalc from "./components/ProgrammerCalc";
 import FinancialCalc from "./components/FinancialCalc";
 import ConverterCalc from "./components/ConverterCalc";
-
-import { useState } from "react";
 import {
   Calculator,
   FlaskConical,
@@ -13,26 +12,18 @@ import {
 import * as math from "mathjs";
 
 function App() {
-  // State to track which calculator is active
   const [activeMode, setActiveMode] = useState("Basic");
-
-  // State for the actual calculator screen
   const [display, setDisplay] = useState("");
 
   const handleCalculate = () => {
     try {
-      // 1. Use mathjs to evaluate the expression safely (handles scientific math like sin/cos)
       const result = math.evaluate(display);
       const finalResult = String(math.format(result, { precision: 14 }));
-
-      // 2. Show the result on the calculator screen
       setDisplay(finalResult);
 
-      // 3. Send the equation and result to the Django database
-      // 3. Send the equation and result to the Django database
+      // Fixed the typos on body and stringify here
       const API_BASE_URL =
         import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
-
       fetch(`${API_BASE_URL}/api/calculations/`, {
         method: "POST",
         headers: {
@@ -58,39 +49,42 @@ function App() {
     else setDisplay(display + value);
   };
 
-  // The navigation menu items
   const modes = [
-    { name: "Basic", icon: <Calculator size={20} /> },
-    { name: "Scientific", icon: <FlaskConical size={20} /> },
-    { name: "Programmer", icon: <Code size={20} /> },
-    { name: "Financial", icon: <Landmark size={20} /> },
-    { name: "Converter", icon: <ArrowRightLeft size={20} /> },
+    { name: "Basic", icon: <Calculator size={18} /> },
+    { name: "Scientific", icon: <FlaskConical size={18} /> },
+    { name: "Programmer", icon: <Code size={18} /> },
+    { name: "Financial", icon: <Landmark size={18} /> },
+    { name: "Converter", icon: <ArrowRightLeft size={18} /> },
   ];
 
   return (
     <div style={styles.layout}>
-      {/* SIDEBAR NAVIGATION */}
-      <div style={styles.sidebar}>
+      {/* TOP NAVIGATION BAR */}
+      <nav style={styles.navbar}>
         <h2 style={styles.logo}>CalcPro</h2>
-        {modes.map((mode) => (
-          <button
-            key={mode.name}
-            onClick={() => setActiveMode(mode.name)}
-            style={{
-              ...styles.navButton,
-              backgroundColor:
-                activeMode === mode.name ? "#333" : "transparent",
-              color: activeMode === mode.name ? "#00ffcc" : "#aaa",
-            }}
-          >
-            {mode.icon}
-            <span style={{ marginLeft: "10px" }}>{mode.name}</span>
-          </button>
-        ))}
-      </div>
+        <div style={styles.navLinks}>
+          {modes.map((mode) => (
+            <button
+              key={mode.name}
+              onClick={() => setActiveMode(mode.name)}
+              style={{
+                ...styles.navButton,
+                backgroundColor:
+                  activeMode === mode.name ? "#333" : "transparent",
+                color: activeMode === mode.name ? "#00ffcc" : "#aaa",
+              }}
+            >
+              {mode.icon}
+              <span style={{ marginLeft: "8px", display: "inline-block" }}>
+                {mode.name}
+              </span>
+            </button>
+          ))}
+        </div>
+      </nav>
 
       {/* MAIN CALCULATOR AREA */}
-      <div style={styles.main}>
+      <main style={styles.main}>
         <div style={styles.header}>
           <h3>{activeMode} Mode</h3>
         </div>
@@ -196,56 +190,74 @@ function App() {
             </>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 }
 
-// Updated Styles for Sidebar + Main Area
 const styles = {
   layout: {
     display: "flex",
-    width: "100vw",
-    height: "100vh",
+    flexDirection: "column",
+    minHeight: "100vh",
+    width: "100%",
+    maxWidth: "100vw", // Forces layout to not exceed screen width
+    overflowX: "hidden", // Prevents the entire page from sliding side-to-side
     backgroundColor: "#121212",
     color: "#fff",
+    boxSizing: "border-box",
   },
-  sidebar: {
-    width: "250px",
-    backgroundColor: "#1a1a1a",
-    padding: "20px",
+  navbar: {
     display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-    borderRight: "1px solid #333",
+    alignItems: "center",
+    padding: "15px 20px",
+    backgroundColor: "#1a1a1a",
+    borderBottom: "1px solid #333",
+    width: "100%", // Ensures navbar stays within layout bounds
+    boxSizing: "border-box",
   },
   logo: {
     color: "#00ffcc",
-    marginBottom: "20px",
+    margin: "0 20px 0 0",
+    fontSize: "1.3rem",
+    fontWeight: "bold",
+    flexShrink: 0,
+  },
+  navLinks: {
+    display: "flex",
+    gap: "8px",
+    overflowX: "auto",
+    scrollbarWidth: "none",
+    msOverflowStyle: "none",
+    flex: 1,
+    paddingBottom: "2px",
+    overscrollBehaviorX: "contain", // THIS stops the calculator from moving when you swipe!
   },
   navButton: {
     display: "flex",
     alignItems: "center",
-    padding: "12px 15px",
+    padding: "8px 12px",
     border: "none",
-    borderRadius: "8px",
+    borderRadius: "6px",
     cursor: "pointer",
-    fontSize: "1rem",
+    fontSize: "0.9rem",
+    whiteSpace: "nowrap",
     transition: "0.2s",
-    textAlign: "left",
   },
   main: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: "40px",
+    padding: "20px",
+    boxSizing: "border-box",
   },
   header: {
     width: "100%",
     maxWidth: "400px",
     marginBottom: "20px",
     color: "#888",
+    textAlign: "center",
   },
   calculator: {
     width: "100%",
@@ -254,6 +266,7 @@ const styles = {
     padding: "20px",
     borderRadius: "20px",
     boxShadow: "0px 10px 30px rgba(0,0,0,0.5)",
+    boxSizing: "border-box",
   },
   display: {
     backgroundColor: "#1a1a1a",
@@ -265,6 +278,7 @@ const styles = {
     marginBottom: "20px",
     overflowX: "auto",
     minHeight: "40px",
+    boxSizing: "border-box",
   },
   grid: {
     display: "grid",
@@ -279,6 +293,7 @@ const styles = {
     backgroundColor: "#333333",
     color: "#fff",
     cursor: "pointer",
+    touchAction: "manipulation",
   },
   sciButton: {
     padding: "10px",
@@ -288,6 +303,7 @@ const styles = {
     backgroundColor: "#2a2a40",
     color: "#aaddff",
     cursor: "pointer",
+    touchAction: "manipulation",
   },
   clearButton: { backgroundColor: "#ff5555" },
   equalsButton: { backgroundColor: "#00aa88", gridColumn: "span 2" },
