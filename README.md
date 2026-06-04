@@ -2,7 +2,9 @@
 
 CalcPro is a feature-rich, multi-mode calculator application engineered to handle complex operations across multiple computational environments. This project bridges a robust Python backend with a high-performance JavaScript frontend, highlighting clean API architecture, secure data persistence, and seamless asynchronous state synchronization.
 
-**[🚀 View the Live Application Here]([https://calcpro-calculator.onrender.com/)**
+**[🚀 View the Live Application Here]([https://calcpro-calculator.onrender.com/)**calcpro-calculator.onrender.com
+
+**[🚀 View the Live Application Here](https://calcpro-calculator.onrender.com/)**
 
 
 ## 🚀 Core Features
